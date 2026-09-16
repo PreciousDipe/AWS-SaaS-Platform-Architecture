@@ -27,7 +27,7 @@
 
 ## Part 2 
 
-- Explain how the API layer scales from 10,000 to 500,000 users
+- Explain how the API layer scales from 10,000 to 500,000 users? 
 To scale from 10k to 500k users we can implement some scaling strategies to handle the massive traffic increase like;
 Horizontal compute scaling (ECS service auto scaling); This uses target-tracking policies like keeping CPU utilization at 60–70% or monitoring request counts to automatically launch more Fargate tasks as traffic climbs.
 Load balancer traffic distribution (ALB distribution); This ensures that as the number of tasks scales up and down, the load balancer instantly registers the new containers and distributes the massive influx of user traffic evenly across them without any downtime.
@@ -62,7 +62,6 @@ Multi-AZ RDS acts as an exact, live clone of your database sitting in a separate
 For RDS PostgreSQL, RTO is a 1–2 minute disruption during automated DNS failover in a Multi-AZ deployment, while RPO is zero data loss under synchronous replication. For production workloads, a Multi-AZ primary alongside Read Replicas and RDS Proxy ensures connection pooling is managed safely.
 
 **Multi-AZ RDS vs Read Replica:**
-
 Multi-AZ RDS is an exact, live clone in a separate AZ, running synchronously to guarantee zero data loss, automatically taking over in 1–2 minutes if the main database fails — but it can't be queried while on standby. Read Replicas are active, asynchronous copies designed to offload read traffic, but don't provide automated failover and carry a minor risk of data loss from replication lag during a sudden crash.
 
 ## Part 4 
@@ -85,7 +84,7 @@ Multi-AZ RDS is an exact, live clone in a separate AZ, running synchronously to 
 - What would change in the architecture if the budget doubled?
 **If budget doubled:** Add more read replicas, upgrade RDS instance class further, add redundant NAT Gateways per AZ, expand RDS Proxy usage, and consider AWS WAF on CloudFront/ALB for added protection.
 
-## Part 5 — Security
+## Part 5 Security
 - How do you prevent the database from being directly accessible from the internet?
 RDS is placed in private subnets with no public IP and configured with a security group that only allows inbound traffic on port 5432 from the application running in the container.
 
