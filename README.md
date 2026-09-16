@@ -25,7 +25,7 @@
 | Private | ECS Tasks | Keeps the containers completely invisible to the internet by giving them only private IPs, forcing all incoming traffic to safely go through the ALB first, and allowing the containers to securely connect outward via the NAT Gateway without being exposed to direct attacks |
 | Private | RDS | Stores sensitive data, meaning it should never be directly accessible from the internet and should only accept secure database connections coming from your ECS containers |
 
-## Part 2 
+## 2 
 
 - Explain how the API layer scales from 10,000 to 500,000 users? 
 To scale from 10k to 500k users we can implement some scaling strategies to handle the massive traffic increase like;
@@ -41,7 +41,7 @@ Amazon ECS (Elastic Container Service) Service Auto Scaling handles this using a
 - How does the database scale? What is the difference between vertical and horizontal scaling for PostgreSQL on AWS?
 Amazon RDS PostgreSQL databases do not automatically scale alongside Fargate tasks and must be managed independently using two scaling strategies:Vertical Scaling (Scale Up): Upgrades a single database instance to a larger size to increase CPU, RAM, and connection limits. This method is straightforward but causes brief downtime during modifications and hits a hard physical capacity ceiling.Horizontal Scaling (Scale Out): Adds multiple Read Replicas to distribute the workload. This strategy offloads read traffic (SELECT queries) across instances, though it cannot resolve write traffic (INSERT/UPDATE) bottlenecks and may introduce minor replication lag.
 
-## Part 3
+## 3
 
 - How does your architecture survive an AZ failure for each component?
 
@@ -64,7 +64,7 @@ For RDS PostgreSQL, RTO is a 1–2 minute disruption during automated DNS failov
 **Multi-AZ RDS vs Read Replica:**
 Multi-AZ RDS is an exact, live clone in a separate AZ, running synchronously to guarantee zero data loss, automatically taking over in 1–2 minutes if the main database fails — but it can't be queried while on standby. Read Replicas are active, asynchronous copies designed to offload read traffic, but don't provide automated failover and carry a minor risk of data loss from replication lag during a sudden crash.
 
-## Part 4 
+## 4 
 - Estimate the monthly cost at launch (low traffic) using at least 3 specific AWS services
 **Launch cost (~10,000 users, low traffic):**
 
@@ -84,7 +84,7 @@ Multi-AZ RDS is an exact, live clone in a separate AZ, running synchronously to 
 - What would change in the architecture if the budget doubled?
 **If budget doubled:** Add more read replicas, upgrade RDS instance class further, add redundant NAT Gateways per AZ, expand RDS Proxy usage, and consider AWS WAF on CloudFront/ALB for added protection.
 
-## Part 5 Security
+## 5
 - How do you prevent the database from being directly accessible from the internet?
 RDS is placed in private subnets with no public IP and configured with a security group that only allows inbound traffic on port 5432 from the application running in the container.
 
