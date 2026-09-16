@@ -12,6 +12,7 @@
 - **NAT Gateway** — Deployed in the public subnet to give Fargate tasks in the private subnet secure, outbound-only internet access (patches, external APIs) while blocking incoming probes.
 - **RDS for PostgreSQL** — Fully managed relational database isolated in the private subnet, handling user profiles, application state, and transactional data with automated snapshot backups.
 - **VPC** — Isolated virtual network defining public subnets (internet-accessible) and private subnets (internal-only systems).
+- **IGW (Internet Gateway)** — Acts as the VPC's main bridge to the public internet. It attaches directly to the virtual network to enable two-way communication, allowing external clients to hit the public application load balancer while simultaneously giving the NAT gateway a path to route outbound requests from private Fargate tasks.
 
 - Show how the three components connect to each other
 ![flow diagram](./flow.drawio.png)
